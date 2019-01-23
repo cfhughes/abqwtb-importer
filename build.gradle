@@ -1,0 +1,41 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE"
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+group 'com.chughes'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://nexus.onebusaway.org/content/groups/public/"
+    }
+}
+
+apply plugin: "io.spring.dependency-management"
+
+dependencyManagement {
+    imports {
+        mavenBom 'com.amazonaws:aws-java-sdk-bom:1.11.228'
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'com.amazonaws:aws-java-sdk-dynamodb'
+    compile 'io.reactivex.rxjava2:rxjava:2.2.2'
+    compile 'org.onebusaway:onebusaway-gtfs-realtime-exporter:1.2.1'
+    compile 'org.slf4j:slf4j-log4j12:1.5.6'
+    compile 'com.squareup.retrofit2:converter-gson:2.4.0'
+}
